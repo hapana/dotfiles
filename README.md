@@ -7,3 +7,7 @@ What I need to get this going:
 1. `bundle install`
 1. Run `enable.sh` in relevant .config directories
 1. Write better scripts to automate this stuff
+
+# Other useful links
+
+- (Win 10 ISO Download)[https://www.microsoft.com/en-gb/software-download/windows10ISO]
