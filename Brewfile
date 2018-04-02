@@ -12,6 +12,7 @@ cask 'docker'
 # Dev env
 brew 'tmux'
 brew 'neovim'
+brew 'goenv'
 cask 'kitty'
 
 # Keyboard stuff
