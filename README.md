@@ -10,4 +10,4 @@ What I need to get this going:
 
 # Other useful links
 
-- (Win 10 ISO Download)[https://www.microsoft.com/en-gb/software-download/windows10ISO]
+- [Win 10 ISO Download](https://www.microsoft.com/en-gb/software-download/windows10ISO)
