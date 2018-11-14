@@ -1,0 +1,13 @@
+[user]
+	email = #email
+	name = Harry P
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[pull]
+  rebase = true
+[core]
+	excludesfile = /Users/harrypanayiotou/.gitignore_global
+[push]
+  default = current
+[rebase]
+  autoStash = true
