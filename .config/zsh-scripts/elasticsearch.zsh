@@ -15,3 +15,23 @@ esdata () {
 
   rm /tmp/random.json
 }
+
+# esperftest index search_query
+esperftest () {
+  local host=localhost
+  local index=$1
+  /usr/bin/time /usr/bin/curl -H 'Content-Type: application/json' -XPOST "$host:9200/$index/_search" -d'
+  {
+    "size": "10000",
+    "query": {
+        "bool" : {
+            "must" : {
+                "query_string" : {
+                    "query" : "thou"
+                }
+            }
+        }
+    }
+  }
+  '
+}
