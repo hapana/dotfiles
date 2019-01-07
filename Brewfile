@@ -6,7 +6,6 @@ tap 'homebrew/bundle'
 tap 'homebrew/core'
 
 # Infra
-cask 'virtualbox'
 cask 'docker'
 
 # Dev env
@@ -14,6 +13,8 @@ brew 'tmux'
 brew 'neovim'
 brew 'goenv'
 cask 'kitty'
+brew 'figlet'
+brew 'task'
 
 # Keyboard stuff
 cask 'karabiner-elements'
