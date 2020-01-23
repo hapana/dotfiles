@@ -1,5 +1,7 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
+syntax on
+filetype plugin indent on
+" filetype off                  " required
 
 " --------------- Plugins installed -------------------------------------------
 
@@ -15,6 +17,14 @@ Plug 'rosenfeld/conque-term'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'w0rp/ale'
+Plug 'itspriddle/vim-shellcheck'
+Plug 'moll/vim-node'
+Plug 'hashivim/vim-terraform'
+Plug 'towolf/vim-helm'
+Plug 'google/vim-jsonnet'
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
+Plug 'stamblerre/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'ervandew/supertab'
 
 " Utility plugins
 Plug 'AndrewRadev/sideways.vim'
@@ -27,8 +37,10 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'neomake/neomake'
 
-" For navigating with vinm and tmux
+" For navigating with vim and tmux
 Plug 'christoomey/vim-tmux-navigator'
 
 " Requires external fzf binary
@@ -46,9 +58,6 @@ set re=1                      " Enable newer regexs
 let g:tagbar_left=1           " Vim tagbar shortcut
 
 " --------------- Color and Scheme Preferences --------------------------------
-
-colorscheme molokai
-let g:molokai_original = 1
 
 " colorscheme base16-default
 
@@ -92,7 +101,6 @@ set ruler                         " Show line and col
 set nobackup                      " Prevents potential slow write
 set statusline+=%F                " Put filepath in status
 set laststatus=2                  " Set status to visible
-set directory=~/.vim/swapfiles//  " Change swapfile location for out of wd
 set fdm=marker                    " Set default fold method to marker
 set backspace=indent,eol,start    " Allow backspace over everything in insert mode
 " set textwidth=80                  " Default line length in chars
@@ -228,29 +236,76 @@ endfun
 " Copy to clipboard when yanking
 "set clipboard=unnamed
 
+" --------------- NerdTree ------------------------------------------
 " Nerd tree toggle
 map <C-n> :NERDTreeToggle<CR>
-
 map <C-f> :NERDTreeFocus<CR>
+
+let NERDTreeShowHidden=1
 
 " Enable deoplete: https://github.com/Shougo/deoplete.nvim
 let g:deoplete#enable_at_startup = 1
 
 " ALE
 let g:ale_sign_column_always = 1
+let g:ale_completion_enabled = 1
 
+" --------------- Go ------------------------------------------
 " Go Aliases
 call SetupCommandAlias("gt","GoTest")
 call SetupCommandAlias("gi","GoImports")
 call SetupCommandAlias("gc","GoCoverage")
+call SetupCommandAlias("gr","!go run main.go")
 
 " Run go imports on save
 let g:go_fmt_command = "goimports"
+
+set completeopt+=noselect
+
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python3_host_skip_check = 1
+
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#fallback_to_source = 0
+let g:deoplete#sources#go#use_cache = 0
+
+let g:go_code_completion_enabled = 1
+let g:go_gocode_unimported_packages = 0
+let g:go_gocode_propose_source = 1
+
+" Not supported by different gocode
+let g:deoplete#sources#go#source_importer = 0
+let g:deoplete#sources#go#builtin_objects = 0
+let g:deoplete#sources#go#unimported_packages = 0
+
+" Using a backup messes up fsnotify
+set nowritebackup
+
+" --------------- Neomake ------------------------------------------
+"  This runs programs asynchronously
+
+function! MyOnBattery()
+  if has('macunix')
+    return match(system('pmset -g batt'), "Now drawing from 'Battery Power'") != -1
+  elsif has('unix')
+    return readfile('/sys/class/power_supply/AC/online') == ['0']
+  endif
+  return 0
+endfunction
+
+if MyOnBattery()
+  call neomake#configure#automake('w')
+else
+  call neomake#configure#automake('nw', 1000)
+endif
+
+" Other
 
 " Turn off swap files
 set noswapfile
 
 call SetupCommandAlias("spell","set spell spelllang=en_us")
 call SetupCommandAlias("copy","!pbcopy && pbpaste")
-
-let NERDTreeShowHidden=1
+call SetupCommandAlias("readme","set textwidth=80")

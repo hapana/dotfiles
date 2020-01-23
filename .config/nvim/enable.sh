@@ -1,2 +1,2 @@
 #! /bin/bash
-ln -s ~/dotfiles/.config/nvim ~/.config/nvim
+ln -s ~/code/dotfiles/.config/nvim ~/.config/nvim
