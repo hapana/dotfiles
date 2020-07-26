@@ -12,19 +12,17 @@ call plug#begin('~/.vim/plugged')
 Plug 'ap/vim-css-color'
 Plug 'chase/vim-ansible-yaml'
 Plug 'digitaltoad/vim-jade'
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'rosenfeld/conque-term'
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'w0rp/ale'
+"Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'w0rp/ale'
 Plug 'itspriddle/vim-shellcheck'
 Plug 'moll/vim-node'
 Plug 'hashivim/vim-terraform'
 Plug 'towolf/vim-helm'
 Plug 'google/vim-jsonnet'
-Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
-Plug 'stamblerre/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Utility plugins
 Plug 'AndrewRadev/sideways.vim'
@@ -38,10 +36,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
+Plug 'vim-scripts/ZoomWin'
+Plug 'voldikss/vim-floaterm'
 
 " For navigating with vim and tmux
 Plug 'christoomey/vim-tmux-navigator'
+
+" Themes
+Plug 'NLKNguyen/papercolor-theme'
 
 " Requires external fzf binary
 set rtp+=/usr/local/opt/fzf
@@ -103,7 +106,8 @@ set statusline+=%F                " Put filepath in status
 set laststatus=2                  " Set status to visible
 set fdm=marker                    " Set default fold method to marker
 set backspace=indent,eol,start    " Allow backspace over everything in insert mode
-" set textwidth=80                  " Default line length in chars
+set updatetime=300
+set cmdheight=2
 
 " For non-neovim editors
 if !has('nvim')
@@ -193,7 +197,6 @@ set foldmethod=indent
 set foldlevel=99
 
 " Turn foldcolumn viewing on for a fold visualization
-nnoremap <leader>f :call FoldColumnToggle()<cr>
 function! FoldColumnToggle()
   if &foldcolumn
     setlocal foldcolumn=0
@@ -249,6 +252,9 @@ let g:deoplete#enable_at_startup = 1
 " ALE
 let g:ale_sign_column_always = 1
 let g:ale_completion_enabled = 1
+let g:ale_linters = {
+ 	\ 'go': ['gopls'],
+ 	\}
 
 " --------------- Go ------------------------------------------
 " Go Aliases
@@ -266,19 +272,9 @@ let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
 let g:python3_host_skip_check = 1
 
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#fallback_to_source = 0
-let g:deoplete#sources#go#use_cache = 0
-
-let g:go_code_completion_enabled = 1
-let g:go_gocode_unimported_packages = 0
-let g:go_gocode_propose_source = 1
-
-" Not supported by different gocode
-let g:deoplete#sources#go#source_importer = 0
-let g:deoplete#sources#go#builtin_objects = 0
-let g:deoplete#sources#go#unimported_packages = 0
+" let g:go_code_completion_enabled = 1
+" let g:go_gocode_unimported_packages = 0
+" let g:go_gocode_propose_source = 1
 
 " Using a backup messes up fsnotify
 set nowritebackup
@@ -295,11 +291,11 @@ function! MyOnBattery()
   return 0
 endfunction
 
-if MyOnBattery()
-  call neomake#configure#automake('w')
-else
-  call neomake#configure#automake('nw', 1000)
-endif
+"if MyOnBattery()
+"  call neomake#configure#automake('w')
+"else
+"  call neomake#configure#automake('nw', 1000)
+"endif
 
 " Other
 
@@ -309,3 +305,48 @@ set noswapfile
 call SetupCommandAlias("spell","set spell spelllang=en_us")
 call SetupCommandAlias("copy","!pbcopy && pbpaste")
 call SetupCommandAlias("readme","set textwidth=80")
+
+" Turns on indent guides
+nnoremap <leader>i :IndentGuidesToggle<CR>
+
+" Turns on full blown shell in vim
+nnoremap <leader>f :FloatermToggle<cr>
+
+" --------------- Coc ------------------------------------------
+"  Tab features
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" coc-snippet
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+" Add imports to save for go
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+
+" Code navigation
+" ctrl + o to go back
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
