@@ -1,0 +1,32 @@
+# Core
+tap 'caskroom/cask'
+tap 'homebrew/bundle'
+tap 'homebrew/core'
+
+# Dev env
+brew 'tmux'
+brew 'neovim'
+brew 'goenv'
+brew 'figlet'
+brew 'task'
+brew 'fzf'
+brew 'jq'
+brew 'fd'
+brew 'the_silver_searcher'
+!brew 'kube-ps1'
+brew 'shellcheck'
+!brew 'autojump'
+brew 'tree'
+  !brew 'yq'
+  !brew 'kubernetes-cli'
+  !brew 'stern'
+brew 'go'
+brew 'ssed'
+  !brew 'grpcurl'
+brew 'htop'
+brew 'nmap'
+brew 'iftop'
+!brew 'tldr'
+
+# Fun
+brew 'sl'

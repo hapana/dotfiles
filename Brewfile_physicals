@@ -1,0 +1,31 @@
+cask_args appdir: "/Applications"
+
+# Core
+tap 'caskroom/cask'
+tap 'homebrew/bundle'
+tap 'homebrew/core'
+
+# Infra
+cask 'docker'
+
+# Keyboard stuff
+cask 'karabiner-elements'
+
+# Fun
+cask 'steam'
+
+# Dev Tools
+brew 'ssed'
+brew 'htop'
+brew 'iftop'
+
+cask 'alacritty'
+cask 'caffeine'
+cask 'diffmerge'
+cask 'firefox'
+cask 'keybase'
+cask 'mtmr'
+cask 'spectacle'
+cask 'the-unarchiver'
+cask 'tor-browser'
+cask 'visual-studio-code'
