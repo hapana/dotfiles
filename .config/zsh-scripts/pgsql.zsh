@@ -16,5 +16,6 @@ $ python2.7
 >>> password = "password1234"
 >>> "md5" + hashlib.md5(password + username).hexdigest()
 'hash'
+export PGCLIENTENCODING=UTF8; psql -p 26257 -h localhost                                    - # Cockroach connection string
 EOF
 }

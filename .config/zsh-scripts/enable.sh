@@ -8,7 +8,7 @@ fi
 # Get current dir of script and set zsh script dir
 DIR="$(dirname "${BASH_SOURCE[0]}")"
 ZSH_DIR=~/.oh-my-zsh/custom/
-DOTFILES_DIR=~/code/dotfiles
+DOTFILES_DIR=~/dotfiles
 
 # Get script files in current dir
 scripts=($(ls $DIR/*.zsh))

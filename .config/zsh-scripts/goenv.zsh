@@ -1,4 +1,8 @@
-eval "$(goenv init -)"
+#eval "$(goenv init -)"
+
+GOPATH=~/go
+GOROOT=~/go
+export GO111MODULE=on
 
 function gehelp () {
 cat <<EOF
