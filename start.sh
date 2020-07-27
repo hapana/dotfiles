@@ -12,6 +12,7 @@ docker build \
 
 docker run \
   -u $CURRENT_USER:$CURRENT_USER \
+  -v $(pwd)/config/zsh-scripts:/home/$USERNAME/.oh-my-zsh/custom \
   --rm \
   -it home \
   /bin/zsh

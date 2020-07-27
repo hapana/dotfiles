@@ -3,6 +3,8 @@ FROM docker:19.03.12-git
 ARG USERNAME
 ARG USERID
 
+ENV SHELL zsh
+
 RUN addgroup -g ${USERID} ${USERNAME}
 RUN adduser \
     --disabled-password \
@@ -18,6 +20,8 @@ RUN apk --update add curl gcc bash ruby tmux neovim go su-exec
 
 RUN apk --update add figlet task fzf jq fd the_silver_searcher shellcheck \
   tree htop nmap iftop sl zsh python3 nodejs npm
+
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # https://www.unixmen.com/tldr-pages-simplified-alternative-unixlinux-man-pages/
 RUN npm install -g tldr && \
