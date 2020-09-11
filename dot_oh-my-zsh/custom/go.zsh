@@ -1,1 +1,1 @@
-PATH=$PATH:~/wip/go/bin
+PATH=$PATH:~/code/go
