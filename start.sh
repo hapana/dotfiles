@@ -20,4 +20,4 @@ docker run \
   -v $(pwd)/config/tmux/tmux.conf:/home/$USERNAME/.tmux.conf \
   --rm \
   -it home \
-  tmux
+  tmux -u 
