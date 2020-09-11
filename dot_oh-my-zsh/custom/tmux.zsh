@@ -18,3 +18,5 @@ EOF
 reload_tmux () {
   tmux source ~/.tmux.conf
 }
+
+if [ "$TMUX" = "" ]; then exec tmux; fi
