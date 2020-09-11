@@ -12,5 +12,6 @@ What I need to get this going:
    ~/.local/share/chezmoi /tmp/dotfiles.zip`
 1. Install brew /usr/bin/ruby -e "$(curl -fsSL
    https://raw.githubusercontent.com/Homebrew/install/master/install)"
+1. Probably `brew install git`
 1. `brew bundle`
 1. Run `chezmoi apply` to apply it all
