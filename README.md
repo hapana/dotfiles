@@ -8,6 +8,10 @@ What I need to get this going:
 1. Run `enable.sh` in relevant .config directories
 1. Write better scripts to automate this stuff
 
+# Notes
+
+Keep a blank file in git: `git update-index --assume-unchanged FILE_NAME`
+
 # Other useful links
 
 - [Win 10 ISO Download](https://www.microsoft.com/en-gb/software-download/windows10ISO)
