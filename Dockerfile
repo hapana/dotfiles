@@ -36,4 +36,3 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/d
 
 RUN git clone git://github.com/wting/autojump.git && \
   cd autojump && zsh -c "SHELL=zsh python3 ./install.py"
-

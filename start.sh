@@ -14,6 +14,7 @@ docker run \
   -u $CURRENT_USER:$CURRENT_USER \
   -v $(pwd)/config/zsh-scripts:/home/$USERNAME/.oh-my-zsh/custom \
   -v $(pwd)/config/task/taskrc:/home/$USERNAME/.taskrc \
+  -v $(pwd)/config/fzf/fzf.zsh:/home/$USERNAME/.fzf.zsh \
   --rm \
   -it home \
   /bin/zsh
