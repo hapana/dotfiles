@@ -24,6 +24,8 @@ brew 'shellcheck'
 brew 'autojump'
 brew 'tree'
 brew 'the_silver_searcher'
+brew 'bitwarden-cli'
+brew 'chezmoi'
 
 # YouCompleteMe
 brew cmake
