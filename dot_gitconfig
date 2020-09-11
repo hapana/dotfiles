@@ -1,10 +1,6 @@
-[include]
-    path = ./config.user
-    # This block should go in ./config.user
-    # This isn't committed to keep my email out of git
-    # [user]
-    #   name="redacted"
-    #   email=redacted
+[user]
+  email = {{ (bitwarden "item" "github.com").login.username }}
+	name = Harry P
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [pull]
@@ -12,7 +8,7 @@
   default = current
 [core]
 	excludesfile = ~/.gitignore_global
-	autocrlf = input
+  autocrlf = input
 [push]
   default = current
 [rebase]
