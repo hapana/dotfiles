@@ -27,9 +27,6 @@ brew 'the_silver_searcher'
 brew 'bitwarden-cli'
 brew 'chezmoi'
 
-# YouCompleteMe
-brew cmake
-
 # Keyboard stuff
 cask 'karabiner-elements'
 
@@ -63,5 +60,3 @@ cask 'spectacle'
 cask 'the-unarchiver'
 cask 'tor-browser'
 # cask 'visual-studio-code' - Only for emergencies involving teapot
-
-
