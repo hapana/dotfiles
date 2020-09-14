@@ -31,7 +31,6 @@ brew 'chezmoi'
 cask 'karabiner-elements'
 
 # Fun
-cask 'steam'
 brew 'figlet'
 brew 'sl'
 
