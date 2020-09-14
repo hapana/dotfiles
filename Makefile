@@ -15,4 +15,8 @@ apply_tmux:
 	chezmoi apply ~/.tmux.conf
 	chezmoi apply ~/.tmux/
 
-apply_all: apply_zsh_scripts apply_dot_config apply_tmux
+apply_task:
+	chezmoi apply ~/.taskrc
+
+apply_all:
+	chezmoi apply
