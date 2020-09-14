@@ -21,8 +21,10 @@ bind-key -T copy-mode-vi C-l select-pane -R
 setw -g mouse on
 bind -n WheelUpPane copy-mode
 
+{{ if eq .chezmoi.os "darwin" -}}
 # Change command key
-#set-option -g prefix §
+set-option -g prefix §
+{{ end -}}
 
 # List of plugins
 # Install with cmd - I
@@ -30,6 +32,7 @@ bind -n WheelUpPane copy-mode
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-yank'
+
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
