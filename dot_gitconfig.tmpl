@@ -1,5 +1,5 @@
 [user]
-  email = {{ (bitwarden "item" "github.com").login.username }}
+  email = "{{ .email }}"
 	name = Harry P
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative

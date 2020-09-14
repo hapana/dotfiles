@@ -1,5 +1,6 @@
 init:
-	chezmoi init git@github.com:hapana/dotfiles.git --apply
+	chezmoi init git@github.com:hapana/dotfiles.git
+	chezmoi execute-template --init < ~/.local/share/chezmoi/.chezmoi.toml.tmpl
 
 add_zsh_scripts:
 	chezmoi add ~/.oh-my-zsh/custom --recursive
