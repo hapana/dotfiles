@@ -5,3 +5,5 @@ reload_zsh () {
 split_yaml () {
   csplit -s --suffix "%03d.yaml" -k "$1" /---/ '{*}'
 }
+
+set -o vi
