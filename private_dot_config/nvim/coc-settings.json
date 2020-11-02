@@ -1,4 +1,5 @@
 {
+  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "json", "yaml"],
   "languageserver": {
     "golang": {
       "command": "go-langserver",
@@ -26,7 +27,7 @@
       "initializationOptions": {}
     },
     "python": {
-      "command": "python3",
+      "command": "python",
       "args": [
         "-mpyls",
         "-vv",

@@ -23,6 +23,7 @@ Plug 'google/vim-jsonnet'
 " Plug 'ervandew/supertab'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vim-scripts/AnsiEsc.vim'
 
 " Utility plugins
 Plug 'AndrewRadev/sideways.vim'
@@ -39,6 +40,8 @@ Plug 'dhruvasagar/vim-table-mode'
 " Plug 'neomake/neomake'
 Plug 'vim-scripts/ZoomWin'
 Plug 'voldikss/vim-floaterm'
+Plug 'airblade/vim-gitgutter'
+Plug 'JamshedVesuna/vim-markdown-preview'
 
 " For navigating with vim and tmux
 Plug 'christoomey/vim-tmux-navigator'
@@ -169,10 +172,8 @@ nnoremap <Leader>d :call delete(expand('%')) <bar> bdelete!
 " Paste from system clipboard
 nmap <leader>P :read !pbpaste <CR>
 
-" Enable cut/copy into system clipboard
-" Standard Ctrl-C/X shortcuts
-vmap <C-x> :!pbcopy<CR>
-vmap <C-c> :w !pbcopy<CR><CR>
+" Enable copy into system clipboard
+vmap <C-c> "*y
 
 " Shortcut to destroy trailing whitespace
 nmap <leader>s :%s/\v\s+$//<CR>
@@ -246,16 +247,6 @@ map <C-f> :NERDTreeFocus<CR>
 
 let NERDTreeShowHidden=1
 
-" Enable deoplete: https://github.com/Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 1
-
-" ALE
-let g:ale_sign_column_always = 1
-let g:ale_completion_enabled = 1
-let g:ale_linters = {
- 	\ 'go': ['gopls'],
- 	\}
-
 " --------------- Go ------------------------------------------
 " Go Aliases
 call SetupCommandAlias("gt","GoTest")
@@ -269,7 +260,7 @@ let g:go_fmt_command = "goimports"
 set completeopt+=noselect
 
 let g:python_host_prog = '/usr/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python3_host_prog = '/usr/local/opt/python@3.8/bin/python3'
 let g:python3_host_skip_check = 1
 
 " let g:go_code_completion_enabled = 1
@@ -303,6 +294,7 @@ endfunction
 set noswapfile
 
 call SetupCommandAlias("spell","set spell spelllang=en_us")
+call SetupCommandAlias("nospell","set nospell")
 call SetupCommandAlias("copy","!pbcopy && pbpaste")
 call SetupCommandAlias("readme","set textwidth=80")
 
@@ -350,3 +342,11 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Terraform
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
+
+" Coc prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+nmap <leader>p :Prettier<CR>
