@@ -9,6 +9,7 @@ thelp (){
 [cmd] [                      - Copy mode (switch to vim)
   shift v                      - select lines
   y                          - copy lines
+  o                          - open in browser
 [cmd] ]                      - Paste
 [cmd] :rename-window <name>  - Rename window
 [cmd] <space>                - Change layout
