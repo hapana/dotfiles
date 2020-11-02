@@ -5,6 +5,7 @@ vhelp () {
 cat <<EOF
 # Switch between buffers
 :b<buffer number>
+:bd delete current tab
 
 # Table mode
 \tm

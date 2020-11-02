@@ -1,5 +1,11 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "json", "yaml"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "json",
+    "yaml",
+    "go"
+  ],
   "languageserver": {
     "golang": {
       "command": "go-langserver",
@@ -28,16 +34,9 @@
     },
     "python": {
       "command": "python",
-      "args": [
-        "-mpyls",
-        "-vv",
-        "--log-file",
-        "/tmp/lsp_python.log"
-      ],
+      "args": ["-mpyls", "-vv", "--log-file", "/tmp/lsp_python.log"],
       "trace.server": "verbose",
-      "filetypes": [
-        "python"
-      ],
+      "filetypes": ["python"],
       "settings": {
         "pyls": {
           "enable": true,
@@ -45,9 +44,7 @@
             "server": "verbose"
           },
           "commandPath": "",
-          "configurationSources": [
-            "pycodestyle"
-          ],
+          "configurationSources": ["pycodestyle"],
           "plugins": {
             "jedi_completion": {
               "enabled": true
