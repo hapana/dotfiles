@@ -21,7 +21,13 @@ What I need to get this going:
 # Post Init Steps
 
 1. Run `/usr/local/opt/fzf/install` for fzf
-1. Run `PlugInstall` in vim and run all coc installs
+1. Run `PlugInstall` in vim
+1. Coc plugins:
+  - coc-go
+  - coc-docker
+  - coc-sh
+  - coc-python
+  - coc-prettier
 
 # SSH Keygen
 

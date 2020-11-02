@@ -23,6 +23,7 @@ brew 'autojump'
 brew 'tree'
 brew 'the_silver_searcher'
 brew 'bitwarden-cli'
+brew 'gh'
 
 # Keyboard stuff
 cask 'karabiner-elements'
