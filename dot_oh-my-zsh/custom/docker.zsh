@@ -13,3 +13,7 @@ dalpine (){
 toolkit (){
   docker run --rm -it hapana/toolkit /bin/ash
 }
+
+dcleanup (){
+  docker stop $(docker ps -aq)
+}

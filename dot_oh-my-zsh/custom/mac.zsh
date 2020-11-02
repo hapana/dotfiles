@@ -2,14 +2,13 @@ alias flush_dns='sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelpe
 
 machelp () {
   cat << EOF
-
-# Switch desktop
+# Switch desktops
 ctrl + arrows
 
 # Spectacle thirds
-ctrl + alt + arrrows
+ctrl + alt + arrows
 
 # Spectacle halves
-special + alt + arrows
+alt + special key + arrows
 EOF
 }
