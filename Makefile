@@ -34,3 +34,5 @@ install_lsp:
 	curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
 	python /tmp/get-pip.py
 	pip install python-language-server==0.34.1
+	# Not quite lsp, but needed for python3
+	pip3 install neovim-remote
