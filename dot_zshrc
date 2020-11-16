@@ -85,3 +85,11 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [[ -z $AWS_PROFILE ]];then
+  aws_prompt='%{$fg[red]%}‹GET BACK TO WORK›%{$reset_color%}'
+else
+  aws_prompt='%{$fg[red]%}‹${AWS_PROFILE}›%{$reset_color%}'
+fi
+PROMPT="╭─${user_host} ${current_dir} ${aws_prompt} ${git_branch}
+╰─%B${user_symbol}%b "
