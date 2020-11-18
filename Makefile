@@ -36,3 +36,4 @@ install_lsp:
 	pip install python-language-server==0.34.1
 	# Not quite lsp, but needed for python3
 	pip3 install neovim-remote
+	pip3 install --upgrade autopep8

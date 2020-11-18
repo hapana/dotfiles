@@ -53,4 +53,5 @@ cask 'keybase'
 cask 'mtmr'
 cask 'spectacle'
 cask 'the-unarchiver'
+cask 'drawio'
 # cask 'visual-studio-code' - Only for emergencies involving teapot
