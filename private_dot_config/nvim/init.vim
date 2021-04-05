@@ -41,7 +41,7 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'vim-scripts/ZoomWin'
 Plug 'voldikss/vim-floaterm'
 Plug 'airblade/vim-gitgutter'
-Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " For navigating with vim and tmux
 Plug 'christoomey/vim-tmux-navigator'
