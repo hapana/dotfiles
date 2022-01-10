@@ -24,6 +24,7 @@ brew 'tree'
 brew 'the_silver_searcher'
 brew 'bitwarden-cli'
 brew 'gh'
+brew 'fish'
 
 # Keyboard stuff
 cask 'karabiner-elements'

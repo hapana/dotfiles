@@ -5,6 +5,10 @@ init:
 add_zsh_scripts:
 	chezmoi add ~/.oh-my-zsh/custom --recursive
 
+apply_fisher:
+	curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+	cat Fishfile | xargs -n 1 -I {} fisher install {}
+
 apply_zsh_scripts:
 	chezmoi apply ~/.oh-my-zsh/custom
 
