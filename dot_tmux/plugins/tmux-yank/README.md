@@ -76,8 +76,6 @@ without `reattach-to-user-namespace`. It doesn't hurt to have it installed.
 -   OS X 10.10: Yosemite – *not required*
 -   OS X 10.11: El Capitan – *not required*
 -   macOS 10.12: Sierra – *required*
--   macOS 10.14: Mojave - *required*
--   macOS 10.15: Catalina - *not required*
 
 The easiest way to use `reattach-to-user-namespace` with `tmux` is use to
 use the [`tmux-sensible`](https://github.com/tmux-plugins/tmux-sensible)
@@ -120,8 +118,7 @@ $ sudo port install tmux-pasteboard
 
 ### Linux
 
--   `xsel` (recommended) or `xclip` (for X).
--   `wl-copy` from [wl-clipboard](https://github.com/bugaevc/wl-clipboard) (for Wayland)
+-   `xsel` (recommended) or `xclip`.
 
 If you have `tmux` 1.5 or newer and are using `xterm`, the <kbd>y</kbd> in
 `copy-mode` and mouse selection will work without `tmux-yank`. See the

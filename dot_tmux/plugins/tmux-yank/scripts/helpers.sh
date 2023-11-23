@@ -1,5 +1,4 @@
 #!bash
-# shellcheck disable=SC2239
 
 yank_line="y"
 yank_line_option="@yank_line"
@@ -147,9 +146,7 @@ clipboard_copy_command() {
             echo "pbcopy"
         fi
     elif command_exists "clip.exe"; then # WSL clipboard command
-        echo "cat | clip.exe"
-    elif command_exists "wl-copy"; then # wl-clipboard: Wayland clipboard utilities
-        echo "wl-copy"
+        echo "clip.exe"
     elif command_exists "xsel"; then
         local xsel_selection
         if [[ $mouse == "true" ]]; then
@@ -174,7 +171,7 @@ clipboard_copy_command() {
 }
 
 # Cache the TMUX version for speed.
-tmux_version="$(tmux -V | cut -d ' ' -f 2 | sed 's/next-//')"
+tmux_version="$(tmux -V | cut -d ' ' -f 2)"
 
 tmux_is_at_least() {
     if [[ $tmux_version == "$1" ]] || [[ $tmux_version == master ]]; then
@@ -199,9 +196,6 @@ tmux_is_at_least() {
     for ((i = 0; i < ${#current_version[@]}; i++)); do
         if ((10#${current_version[i]} < 10#${wanted_version[i]})); then
             return 1
-        fi
-        if ((10#${current_version[i]} > 10#${wanted_version[i]})); then
-            return 0
         fi
     done
     return 0
