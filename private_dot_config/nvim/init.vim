@@ -42,6 +42,7 @@ Plug 'vim-scripts/ZoomWin'
 Plug 'voldikss/vim-floaterm'
 Plug 'airblade/vim-gitgutter'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" Plug 'codota/tabnine-vim'
 
 " For navigating with vim and tmux
 Plug 'christoomey/vim-tmux-navigator'
@@ -240,6 +241,22 @@ endfun
 " Copy to clipboard when yanking
 "set clipboard=unnamed
 
+:vnoremap <leader>64 y:echo system('base64 --decode', @")<cr>
+
+" Turn off swap files
+set noswapfile
+
+call SetupCommandAlias("spell","set spell spelllang=en_us")
+call SetupCommandAlias("nospell","set nospell")
+call SetupCommandAlias("copy","!pbcopy && pbpaste")
+call SetupCommandAlias("readme","set textwidth=80")
+
+" Turns on indent guides
+nnoremap <leader>i :IndentGuidesToggle<CR>
+
+" Turns on full blown shell in vim
+nnoremap <leader>f :FloatermToggle<cr>
+
 " --------------- NerdTree ------------------------------------------
 " Nerd tree toggle
 map <C-n> :NERDTreeToggle<CR>
@@ -270,39 +287,6 @@ let g:python3_host_skip_check = 1
 " Using a backup messes up fsnotify
 set nowritebackup
 
-" --------------- Neomake ------------------------------------------
-"  This runs programs asynchronously
-
-function! MyOnBattery()
-  if has('macunix')
-    return match(system('pmset -g batt'), "Now drawing from 'Battery Power'") != -1
-  elsif has('unix')
-    return readfile('/sys/class/power_supply/AC/online') == ['0']
-  endif
-  return 0
-endfunction
-
-"if MyOnBattery()
-"  call neomake#configure#automake('w')
-"else
-"  call neomake#configure#automake('nw', 1000)
-"endif
-
-" Other
-
-" Turn off swap files
-set noswapfile
-
-call SetupCommandAlias("spell","set spell spelllang=en_us")
-call SetupCommandAlias("nospell","set nospell")
-call SetupCommandAlias("copy","!pbcopy && pbpaste")
-call SetupCommandAlias("readme","set textwidth=80")
-
-" Turns on indent guides
-nnoremap <leader>i :IndentGuidesToggle<CR>
-
-" Turns on full blown shell in vim
-nnoremap <leader>f :FloatermToggle<cr>
 
 " --------------- Coc ------------------------------------------
 "  Tab features
