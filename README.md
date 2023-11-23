@@ -26,6 +26,7 @@ What I need to get this going:
 - coc-sh
 - coc-python
 - coc-prettier
+- coc-highlight
 
 # SSH Keygen
 
