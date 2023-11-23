@@ -11,3 +11,7 @@
 #  curl --request POST --header "PRIVATE-TOKEN: $GITLAB_FSA_API_TOKEN" \
 #    https://gitlab.frontendserviceaccount.com/api/v4/projects/$project/export
 #}
+#
+gdp () {
+  git push -o ci.variable="PIPELINE_DEBUG=true"
+}

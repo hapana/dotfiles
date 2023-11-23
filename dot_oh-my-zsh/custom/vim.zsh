@@ -44,6 +44,12 @@ q    to close the quickfix window
 ma  Set mark at a
 'a  Go to mark a
 \`a  Go to line and column for a
+
+# Macros
+qa    to start recording at mark a
+q     to stop recording
+@a    to run macro at mark a
+200@a to run the macro at mark a 200 times
 EOF
 }
 

@@ -1,12 +1,19 @@
 export PATH=$PATH:$HOME/.linkerd2/bin
 
+# Main alias
 alias k="kubectl"
+
+# Helper functions to ge the first of things
 get_pod_name() {
-  echo $(kubectl -n $1 get pods | grep $2 | cut -d' ' -f1 | head -n 1)
+  echo $(kubectl get pods -n $(get_namespace $1)| grep $2 | cut -d' ' -f1 | head -n 1)
 }
 
 get_deployment_name(){
-  echo $(kubectl -n $1 get deployments | grep $2 | cut -d' ' -f1)
+  echo $(kubectl get deployments -n $(get_namespace $1) | grep $2 | cut -d' ' -f1)
+}
+
+get_namespace(){
+  echo $(kubectl get namespaces | grep $1 | cut -d' ' -f1 | head -n 1)
 }
 
 # Load autocompletions
@@ -14,80 +21,102 @@ if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
 
+# k_install 1.21.0
+kinstall() {
+  pushd /tmp
+  if [[ -n $1 ]];then
+    curl -LO "https://dl.k8s.io/release/v$1/bin/darwin/amd64/kubectl"
+    curl -LO "https://dl.k8s.io/release/v$1/bin/darwin/amd64/kubectl.sha256"
+    echo "$(<kubectl.sha256)  kubectl" | shasum -a 256 --check
+  else
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl.sha256"
+    echo "$(<kubectl.sha256)  kubectl" | shasum -a 256 --check
+  fi
+  chmod +x /tmp/kubectl
+  popd
+  mv /tmp/kubectl /usr/local/bin/kubectl
+}
+
 # kbash <namespace> <pod> <container>
 kbash () {
   if [[ -n $3 ]];then
-    kubectl -n $1 exec -it $(get_pod_name $1 $2) --container $3 /bin/bash
+    kubectl exec -it $(get_pod_name $1 $2) -n $(get_namespace $1) --container $3 /bin/bash
   else
-    kubectl -n $1 exec -it $(get_pod_name $1 $2) /bin/bash
+    kubectl exec -it $(get_pod_name $1 $2) -n $(get_namespace $1) /bin/bash
   fi
+}
+
+# kleft <namespace>
+kleft () {
+  kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n $(get_namespace $1)
 }
 
 # kbsh <namespace> <pod> <container>
 kbsh () {
   if [[ -n $3 ]];then
-    kubectl -n $1 exec -it $(get_pod_name $1 $2) --container $3 /bin/sh
+    kubectl exec -it $(get_pod_name $1 $2) -n $(get_namespace $1) --container $3 /bin/sh
   else
-    kubectl -n $1 exec -it $(get_pod_name $1 $2) /bin/sh
+    kubectl exec -it $(get_pod_name $1 $2) -n $(get_namespace $1) /bin/sh
   fi
 }
 
 # kpf <namespace> <pod> <port>
 kpf () {
-    kubectl -n $1 port-forward $(get_pod_name $1 $2) $3
+    kubectl port-forward $(get_pod_name $1 $2) -n $(get_namespace $1) $3
 }
 
 # kgp <namespace>
 kgp () {
  if [[ -n $2 ]];then
-   kubectl -n $1 get pods -o wide
+   kubectl get pods -n $(get_namespace $1) -o wide
  else
-   kubectl -n $1 get pods
+   kubectl get pods -n $(get_namespace $1)
  fi
 }
 
 # kw <namespace>
 kw () {
  if [[ -n $2 ]];then
-   kubectl -n $1 get pods -o wide -w
+   kubectl get pods -o wide -w -n $(get_namespace $1)
  else
-   kubectl -n $1 get pods -w
+   kubectl get pods -wn $(get_namespace $1)
  fi
 }
 
 # kgd <namespace>
 kgd () {
- kubectl -n $1 get deployments
+ kubectl get deployments -n $(get_namespace $1)
 }
 
 # Describe Pod
 # kdp <namespace> <pod>
 kdp () {
-  kubectl -n $1 describe pod $(get_pod_name $1 $2)
+  kubectl describe pod $(get_pod_name $1 $2) -n $(get_namespace $1)
 }
 
 # Describe deployments
 # kdd <namespace> <pod>
 kdd () {
-  kubectl -n $1 describe deployments $(get_deployment_name $1 $2)
+  kubectl describe deployments $(get_deployment_name $1 $2) -n $(get_namespace $1)
 }
 
 # klogs <namespace> <pod> <container>
 klogs () {
   if [[ -n $3 ]];then
-   kubectl -n $1 logs $(get_pod_name $1 $2) --container $3
+   kubectl logs $(get_pod_name $1 $2) --container $3 -n $(get_namespace $1)
   else
-   kubectl -n $1 logs $(get_pod_name $1 $2)
+   kubectl logs $(get_pod_name $1 $2) -n $(get_namespace $1)
   fi
 }
 
 # kscale <namespace> <deployment> <target>
 kscale () {
- kubectl -n $1 scale deployment $(get_deployment_name $1 $2) --replicas $3
+ kubectl scale deployment $(get_deployment_name $1 $2) --replicas $3 -n $(get_namespace $1)
 }
 
 ktest () {
- kubectl -n $1 run -i -t harry-busybox --image=busybox --restart=Never -- /bin/sh
+ kubectl run -i -t harry-busybox --image=busybox --restart=Never -- /bin/sh -n $(get_namespace $1)
 }
 
 
@@ -111,7 +140,7 @@ kgn () {
 
 # kgi <namespace>
 kgi () {
-  kubectl get ingress -n $1
+  kubectl get ingress -n $(get_namespace $1)
 }
 
 # kpdist
@@ -125,9 +154,15 @@ kdebug () {
   kubectl run --rm -i --tty harry-toolkit --image=hapana/toolkit -- sh
 }
 
+
 # kmigcount
 kmigcount () {
   kpdist | awk '{ print ($1 < 10) ? "true" : "false" }' | grep true | wc -l
+}
+
+# kcron <namespace> <cronjob> <integer>
+kcron () {
+  kubectl create job -n $(get_namespace $1) --from=cronjob/$2 hp-manual-test-$3
 }
 
 ########
@@ -136,11 +171,11 @@ kmigcount () {
 
 # kstate <namespace> <release>
 kstate () {
-  helm history $2 --tiller-namespace $1
+  helm history $1 --tiller-namespace kube-system
   read number
   # For secret backed chart storage
   # kubectl get secrets --namespace $1 $2.v$number -o json | jq -r '.data.release'  | base64 -D | base64 -D | gzip -dc
-  kubectl get configmap --namespace $1 $2.v$number -o json| jq -r '.data.release'  | base64 -d  | gzip -dc
+  kubectl get configmap --namespace kube-system $1.v$number -o json| jq -r '.data.release'  | base64 -d  | gzip -dc
 }
 
 # krun image command
@@ -159,7 +194,8 @@ kga () {
 # kroll <namespace>
 kroll () {
   local namespace=$1
-  kubectl get pods -n $namespace | awk '{print $1}' | tail +2 | xargs kubectl delete pod -n $namespace
+  local pods=$2
+  kubectl get pods -n $namespace | grep $2 | awk '{print $1}' | xargs -n 1 -I {} bash -c "kubectl delete pod -n $namespace {}; sleep 30"
 }
 
 khelp () {
@@ -214,6 +250,17 @@ kw <namespace>
 # Get number of drained nodes
 kmigcount
 
+# Get resources left in namespace
+kleft namespace
+
+# Create temporary cronjobs
+kcron <namespace> <cronjob> <integer>
+
+# Install kubectl
+kinstall 1.19.0
+
+# Custom columns
+kubectl get pods --namespace default --output=custom-columns="NAME:.metadata.name,IMAGE:.spec.containers[*].image"
 EOF
 }
 
